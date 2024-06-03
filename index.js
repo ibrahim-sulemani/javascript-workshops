@@ -6,7 +6,7 @@ const greetings = ["Hello!", "Hi!", "Hey there!", "Greetings!", "Salutations!"];
 function greeting() {
     const greetings = ["Hello!", "Hi!", "Hey there!", "Greetings!", "Salutations!"];
 
-    let index = Math.floor(Math.random() * 5);
+    let index = Math.floor(Math.random() * greetings.length);
 
     return greetings[index];
 }
