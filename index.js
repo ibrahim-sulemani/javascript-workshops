@@ -127,10 +127,10 @@ function presmetuvaj(recenica) {
   let soglaskiCounter = 0;
   let samoglaskiCounter = 0;
 
-  let samoglaski = "aeiouAEIOU";
+  let samoglaski = "aeiou";
 
   for (char of recenica) {
-    if (samoglaski.includes(char)) {
+    if (samoglaski.includes(char.toLowerCase())) {
       samoglaskiCounter++;
     } else {
       soglaskiCounter++;
