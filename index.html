@@ -6,8 +6,25 @@
     <title>Document</title>
 </head>
 <body>
-    ECMAScript = JavaScript 
-    
+   <button onclick="dateTime()">Date/Time</button>
+   <p id="dateTime"></p>
+
+
+    <button onclick="createNewDiv()">Create New Div</button>
+    <div id="createdDivs"></div>
+
+
+    <label for="states">Choose a state:</label>
+    <select name="states" id="states" onchange="showState()">
+        <option disabled selected> -- select an option -- </option>
+        <option>Italy</option>
+        <option>Belgium</option>
+        <option>Switzerland</option>
+        <option>France</option>
+    </select>
+
+    <p id="selectedState"></p>
+
 </body>
 <script src="index.js">
 
