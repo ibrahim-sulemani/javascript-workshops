@@ -38,9 +38,7 @@ function login() {
   }
 
   document.getElementById("login").style.display = "none";
-  document.getElementById("usernameSpan").textContent = loggedInUser.username;
-  document.getElementById("loggedInContent").classList.remove("d-none");
-
+  document.body.appendChild(createDiv(loggedInUser.username));
 
   var demoModal = bootstrap.Modal.getInstance(
     document.getElementById("loginModal")
@@ -48,4 +46,39 @@ function login() {
 
   demoModal.hide();
   demoModal.dispose();
+}
+
+function createDiv(username) {
+  const divWelcome = document.createElement("div");
+  divWelcome.classList.add("container", "mt-5");
+
+  const h3 = document.createElement("h3");
+  h3.textContent = `Welcome back, ${username}!`;
+
+  const p = document.createElement("p");
+  p.textContent = "This content is only visible to logged-in users.";
+
+  const divContent = document.createElement("div");
+  divContent.classList.add("border", "rounded", "p-3");
+
+  const h4 = document.createElement("h4");
+  h4.textContent = "Exclusive Content";
+
+  const pcontent = document.createElement("p");
+  pcontent.textContent =
+    "Congratulations! You have exclusive access to this content.";
+
+  const button = document.createElement("button");
+  button.textContent = "Go somewhere";
+  button.classList.add("btn", "btn-primary");
+
+  divContent.appendChild(h4);
+  divContent.appendChild(pcontent);
+  divContent.appendChild(button);
+
+  divWelcome.appendChild(h3);
+  divWelcome.appendChild(p);
+  divWelcome.appendChild(divContent);
+
+  return divWelcome;
 }
