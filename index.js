@@ -17,9 +17,13 @@ let itemsArray = [];
 function addItem() {
     const itemElement = document.getElementById("newItem");
 
-    itemsArray.push(itemElement.value);
+    if(itemElement.value){
+        itemsArray.push(itemElement.value);
 
-    itemElement.value = "";
+        itemElement.value = "";
+    }  else {
+        alert("Please fill up the input field!")
+    }
 
     displayElements(itemsArray);
 }
@@ -28,43 +32,45 @@ function displayElements(items) {
     const itemList = document.getElementById("itemList");
     itemList.innerHTML = "";
     
-    for (item of items){
+    items.forEach((item, index) =>{
         const itemElement = document.createElement("li");
+        itemElement.setAttribute("id", index);
+
         itemElement.innerHTML = `
             ${item}
-            <button class="edit-btn" onclick = "editItem('${item}')">Edit</button> 
-            <button class="delete-btn" onclick = "deleteItem('${item}')">Delete</button>
+            <button class="edit-btn" onclick = "editItem('${index}', '${item}')">Edit</button> 
+            <button class="delete-btn" onclick = "deleteItem('${index}')">Delete</button>
         `;
 
         itemList.appendChild(itemElement);
-    }
+    });
 }
 
-function deleteItem(item) {
-    index = itemsArray.findIndex(element => element == item);
-
+function deleteItem(index) {
     itemsArray.splice(index, 1);
 
     displayElements(itemsArray);
 }
 
-function editItem(item) {
-    index = itemsArray.findIndex(element => element == item);
-
-    const itemList = document.getElementById("itemList");
-    const itemElement = itemList.getElementsByTagName('li')[index];
+function editItem(index, item) {
+    const itemElement = document.getElementById(index);
 
     itemElement.innerHTML = `
             <input type="text" value="${item}" id="editItemInput">
-            <button class="edit-btn" onclick = "saveItem(${index}, '${item}')">Save</button> 
+            <button class="edit-btn" onclick = "saveItem('${index}')">Save</button> 
         `;
 }
 
-function saveItem(index, item) {
+function saveItem(index) {
     const newValue = document.getElementById("editItemInput").value;
 
     itemsArray.splice(index, 1, newValue);
-    displayElements(itemsArray);
 
+    displayElements(itemsArray);
 }
 
+// array.forEach(function(currentValue, index, arr), thisValue)
+
+// itemsArray.forEach((item, index) => {
+//     console.log(item, index);
+//   });
