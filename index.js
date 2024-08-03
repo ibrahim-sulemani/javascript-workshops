@@ -27,13 +27,15 @@ async function load() {
             `<div class="col-md-3">
                     <div class="card m-2" style="width: 100%;">
               <img class="card-img-top" src="${user.avatar}" alt="Card image cap">
-              <div class="card-body">
+              <div class="card-body" id="userEdit-${user.id}">
                 <h5 class="card-title">${user.name}</h5>
                 <p class="card-text">${user.gender}</p>
                 <p class="card-text">${user.jobTitle}</p>
                 <p class="card-text">${user.jobType}</p>
                 <p>${user.id}</p>
                 <button class="btn btn-danger" onclick="deleteUser(${user.id})">Delete</button>
+                <button class="btn btn-outline-success" onclick='editUser("${user.id}", "${user.name}", "${user.gender}", "${user.jobTitle}", "${user.jobType}")'>Edit</button>
+
               </div>
             </div>
             </div>`
@@ -86,11 +88,8 @@ async function deleteUser(userId) {
 }
 
 
-document.getElementById("submit-update").addEventListener("click", async (e) => {
+async function updateUser(userId) {
 
-    e.preventDefault();
-
-    const id = document.getElementById("updateId").value;
     const updateName = document.getElementById("updateName").value;
     const updateGender = document.getElementById("updateGender").value;
     const updateJobTitle = document.getElementById("updateJobTitle").value;
@@ -104,7 +103,7 @@ document.getElementById("submit-update").addEventListener("click", async (e) => 
     }
     
 
-    const response = await fetch(`${apiUrl}/${id}`, {
+    const response = await fetch(`${apiUrl}/${userId}`, {
         method: 'PUT',
         headers: {
             'Content-Type': 'application/json'
@@ -115,5 +114,21 @@ document.getElementById("submit-update").addEventListener("click", async (e) => 
     const result = await response.json();
     alert("Resource updated!");
     load();
-});
+}
 
+
+function editUser(userId, userName, userGender, userJobTitle, userJobType){
+    const divElement = document.getElementById("userEdit-"+userId);
+
+    divElement.innerHTML = `
+            <label for="name">Name</label>
+            <input type="text" class="form-control" id="updateName" value="${userName}">
+            <label for="gender">Gender</label>
+            <input type="text" class="form-control" id="updateGender" value="${userGender}">
+            <label for="jobTitle">Job Title</label>
+            <input type="text" class="form-control" id="updateJobTitle" value="${userJobTitle}">
+            <label for="jobType">Job Type</label>
+            <input type="text" class="form-control" id="updateJobType" value="${userJobType}">
+            <button class="btn btn-outline-success mt-2" type="submit" onclick="updateUser(${userId})">Update user</button>
+    `;
+}
